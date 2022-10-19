@@ -35,6 +35,10 @@ public class Projectile : MonoBehaviour {
     {
         if (bndCheck.offUp)
         {
+            if (_type == WeaponType.missile)
+            {
+                FindObjectOfType<Hero>().ShootMissile(GetComponent<Missile>().index++);
+            }
             Destroy(gameObject);
         }
     }

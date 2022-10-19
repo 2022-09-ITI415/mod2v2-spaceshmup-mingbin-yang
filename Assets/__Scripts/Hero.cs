@@ -15,6 +15,9 @@ public class Hero : MonoBehaviour {
     public float projectileSpeed = 40;
     public Weapon[] weapons;
 
+    public GameObject missilePrefab;
+    public int missileNumOfShots = 3;
+
     [Header("Set Dynamically")]
     [SerializeField]
     public float _shieldLevel = 1;
@@ -42,6 +45,8 @@ public class Hero : MonoBehaviour {
         // Reset the weapons to start _Hero with 1 blaster
         ClearWeapons();
         weapons[0].SetType(WeaponType.blaster);
+
+        StartCoroutine(Fire());
     }
 	
 	// Update is called once per frame
@@ -63,9 +68,18 @@ public class Hero : MonoBehaviour {
         // Use the fireDelegate to fire Weapons
         // First, make sure the button is pressed: Axis("Jump")
         // Then ensure that fireDelegate isn't null to avoid an error
-        if (Input.GetAxis("Jump") == 1 && fireDelegate != null)
+        //if (Input.GetAxis("Jump") == 1 && fireDelegate != null)
+        //{
+        //    fireDelegate();
+        //}
+    }
+
+    IEnumerator Fire()
+    {
+        while (true)
         {
             fireDelegate();
+            yield return null;
         }
     }
 
@@ -105,6 +119,9 @@ public class Hero : MonoBehaviour {
         {
             case WeaponType.shield:
                 shieldLevel++;
+                break;
+            case WeaponType.missile:
+                ShootMissile(0);
                 break;
 
             default:
@@ -165,5 +182,15 @@ public class Hero : MonoBehaviour {
         {
             w.SetType(WeaponType.none);
         }
+    }
+
+    public void ShootMissile(int missileIndex)
+    {
+        if (missileIndex > missileNumOfShots)
+            return;
+        Vector3 firePos = transform.position;
+        firePos.y++;
+        GameObject missile = Instantiate(missilePrefab, firePos, Quaternion.identity);
+        missile.GetComponent<Missile>().index = missileIndex;
     }
 }
