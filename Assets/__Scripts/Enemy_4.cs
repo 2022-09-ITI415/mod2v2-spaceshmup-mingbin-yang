@@ -146,6 +146,10 @@ public class Enemy_4 : Enemy {
                     break;
                 }
 
+                if (p.type == WeaponType.missile)
+                {
+                    p.GetComponent<Missile>().ExplodeVFX();
+                }
                 // Hurt this Enemy
                 GameObject goHit = coll.contacts[0].thisCollider.gameObject;
                 Part prtHit = FindPart(goHit);

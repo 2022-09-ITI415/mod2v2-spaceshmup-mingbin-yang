@@ -17,6 +17,9 @@ public class Hero : MonoBehaviour {
 
     public GameObject missilePrefab;
     public int missileNumOfShots = 3;
+    int missileCount;
+
+    public WeaponType tempWType;
 
     [Header("Set Dynamically")]
     [SerializeField]
@@ -121,7 +124,15 @@ public class Hero : MonoBehaviour {
                 shieldLevel++;
                 break;
             case WeaponType.missile:
-                ShootMissile(0);
+                if (pu.type == weapons[0].type)
+                {
+                    return;
+                }
+                else
+                {
+                    tempWType = weapons[0].type;
+                    weapons[0].type = WeaponType.missile;
+                }
                 break;
 
             default:

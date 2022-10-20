@@ -31,6 +31,9 @@ public class Enemy : MonoBehaviour {
         {
             originalColors[i] = materials[i].color;
         }
+
+        speed = (Main.S.difficultyStage + 1) * 2;
+        health = (Main.S.difficultyStage + 1) * 2;
     }
 
     // This is a property: A method that acts like a field
@@ -87,7 +90,12 @@ public class Enemy : MonoBehaviour {
                 ShowDamage();
                 // Get the damage amount from the Main WEAP_DICT
                 health -= Main.GetWeaponDefinition(p.type).damageOnHit;
-                if(health <= 0)
+                if (p.type == WeaponType.missile)
+                {
+                    p.GetComponent<Missile>().ExplodeVFX();
+                }
+
+                if (health <= 0)
                 {
                     // Tell the Main singleton that this ship was destroyed
                     if (!notifiedOfDestruction)
@@ -95,6 +103,7 @@ public class Enemy : MonoBehaviour {
                         Main.S.ShipDestroyed(this);
                     }
                     notifiedOfDestruction = true;
+                    Main.S.gameObject.GetComponent<AudioSource>().PlayOneShot(Main.S.hurtSFX);
                     // Destroy this enemy
                     Destroy(this.gameObject);
                 }

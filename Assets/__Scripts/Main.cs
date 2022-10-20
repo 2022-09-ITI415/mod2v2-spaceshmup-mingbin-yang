@@ -19,6 +19,12 @@ public class Main : MonoBehaviour {
         WeaponType.blaster, WeaponType.blaster, WeaponType.spread, WeaponType.shield
     };
 
+    public int difficultyStage = 0;
+    public int difficultyCap = 5;
+
+    public AudioClip hurtSFX;
+    public AudioClip explosionSFX;
+
     private BoundsCheck bndCheck;
 
     public void ShipDestroyed( Enemy e)
@@ -56,6 +62,7 @@ public class Main : MonoBehaviour {
         {
             WEAP_DICT[def.type] = def;
         }
+        Invoke("IncreaseDifficulty", 5f);
     }
 
     public void SpawnEnemy()
@@ -116,5 +123,14 @@ public class Main : MonoBehaviour {
         return new WeaponDefinition();
     }
 
+    public void IncreaseDifficulty()
+    {
+        if (difficultyStage >= difficultyCap)
+            return;
+
+        difficultyStage++;
+        Invoke("IncreaseDifficulty", 10f);
+        
+    }
    
 }

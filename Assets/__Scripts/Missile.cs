@@ -12,7 +12,7 @@ public class Missile : MonoBehaviour
     [SerializeField] private GameObject _explosionPrefab;
 
     [Header("MOVEMENT")]
-    [SerializeField] private float _speed = 15;
+    public  float speed = 15;
     [SerializeField] private float _rotateSpeed = 95;
 
     private void Start()
@@ -50,22 +50,24 @@ public class Missile : MonoBehaviour
         if (!_target)
         {
             FindTarget();
+            MoveForward();
             return;
         }
 
         Vector3 dir = _target.transform.position - transform.position;
         transform.LookAt(_target.transform.position);
-        transform.Translate(dir * _speed * Time.deltaTime);
-
+        MoveForward();
     }
 
-    private void OnTriggerEnter(Collider other)
+    void MoveForward()
     {
-        if (other.gameObject == _target)
-        {
-            Debug.Log("Dealing damage to " + _target);
-            Enemy enemy = other.GetComponent<Enemy>();
-            enemy.TakeDamage(Main.GetWeaponDefinition(GetComponent<Projectile>().type).damageOnHit);
-        }
+        _rb.velocity = transform.forward * speed;
+    }
+
+    public void ExplodeVFX()
+    {
+        Debug.Log("Explode!");
+        Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+        FindObjectOfType<Hero>().GetComponent<AudioSource>().PlayOneShot(Main.S.explosionSFX);
     }
 }
