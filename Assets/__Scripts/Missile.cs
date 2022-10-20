@@ -58,4 +58,13 @@ public class Missile : MonoBehaviour
         transform.Translate(dir * _speed * Time.deltaTime);
 
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject == _target)
+        {
+            Enemy enemy = other.GetComponent<Enemy>();
+            enemy.TakeDamage(Main.GetWeaponDefinition(GetComponent<Projectile>().type).damageOnHit);
+        }
+    }
 }

@@ -107,6 +107,24 @@ public class Enemy : MonoBehaviour {
         }
     }
 
+    public void TakeDamage(float damageOnHit)
+    {
+        health -= damageOnHit;
+        ShowDamage();
+        Debug.Log("Take damage from missile");
+        if (health <= 0)
+        {
+            // Tell the Main singleton that this ship was destroyed
+            if (!notifiedOfDestruction)
+            {
+                Main.S.ShipDestroyed(this);
+            }
+            notifiedOfDestruction = true;
+            // Destroy this enemy
+            Destroy(this.gameObject);
+        }
+    }
+
     void ShowDamage()
     {
         foreach (Material m in materials)

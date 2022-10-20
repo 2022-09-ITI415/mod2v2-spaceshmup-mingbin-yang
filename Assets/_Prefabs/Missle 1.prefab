@@ -191,11 +191,6 @@ MonoBehaviour:
   _explosionPrefab: {fileID: 139366, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
   _speed: 15
   _rotateSpeed: 95
-  _maxDistancePredict: 100
-  _minDistancePredict: 5
-  _maxTimePrediction: 5
-  _deviationAmount: 50
-  _deviationSpeed: 2
 --- !u!136 &2192706767712166647
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -204,7 +199,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4407298296263890558}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.49823478
   m_Height: 2.7563882
