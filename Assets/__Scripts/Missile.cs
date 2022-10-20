@@ -63,6 +63,7 @@ public class Missile : MonoBehaviour
     {
         if (other.gameObject == _target)
         {
+            Debug.Log("Dealing damage to " + _target);
             Enemy enemy = other.GetComponent<Enemy>();
             enemy.TakeDamage(Main.GetWeaponDefinition(GetComponent<Projectile>().type).damageOnHit);
         }
