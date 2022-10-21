@@ -14,6 +14,7 @@ public class Hero : MonoBehaviour {
     public GameObject projectilePrefab;
     public float projectileSpeed = 40;
     public Weapon[] weapons;
+    public Weapon specialWeapon;
 
     public GameObject missilePrefab;
     public int missileNumOfShots = 3;
@@ -124,19 +125,18 @@ public class Hero : MonoBehaviour {
                 shieldLevel++;
                 break;
             case WeaponType.missile:
-                if (pu.type == weapons[0].type)
+                if (pu.type == specialWeapon.type)
                 {
                     return;
                 }
                 else
                 {
-                    tempWType = weapons[0].type;
-                    weapons[0].type = WeaponType.missile;
+                    specialWeapon.type = pu.type;
                 }
                 break;
 
             default:
-                if(pu.type == weapons[0].type)
+                if(pu.type == weapons[0].type || weapons[0].type == WeaponType.missile)
                 {
                     Weapon w = GetEmptyWeaponSlot();
                     if(w != null)
